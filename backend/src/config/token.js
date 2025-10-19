@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
-export const generateToken = (user)=>{
+ const generateToken = (user)=>{
     return jwt.sign(
         {id: user._id , email: user.email , role: user.role},
         process.env.JWT_SECRET,
@@ -16,3 +16,5 @@ export const verifyToken = (token) =>{
         console.log(" something wong in verify_token !!!!! ")
     }
 }
+
+export default generateToken

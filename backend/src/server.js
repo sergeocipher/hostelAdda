@@ -1,14 +1,13 @@
-import express from "express";
+// it will lisen and run the app on port 8000  and connect to mongoDB 
+import dotenv from "dotenv";
+dotenv.config();
 
+import app from "./app.js"
+import connectDB from "./config/connectDB.js"
 
-
-const app = express();
-app.get('/test', (req, res) => {
-    console.log('Server at web ')
-    res.send('Hello')
+connectDB().then(() =>{
+    app.listen(process.env.PORT , ()=>{
+    console.log("yo boy server running !!!!")
+    })
 })
 
-
-app.listen(3000 , () =>{
-    console.log("server at 3000")
-})

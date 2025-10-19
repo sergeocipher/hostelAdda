@@ -1,8 +1,9 @@
-// import {express , router} from "express";
+import {express , router} from "express";
+import protect from "../middlewares/auth.middleware.js";
 
-// router = express.Router()
+router = express.Router()
 
-// router.get("/users" , (req,res)=>{
-//     res.send(" User routers is working !!!!")
-// })
-// export default router;
+router.get("/profile" ,protect, (req,res)=>{
+    res.json({user: req.user})
+})
+export default router;

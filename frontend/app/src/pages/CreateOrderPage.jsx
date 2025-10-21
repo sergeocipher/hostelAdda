@@ -4,6 +4,7 @@ import CategorySelect from "../components/CategorySelect";
 import OrderDescription from "../components/OrderDescription";
 import OrderDeadline from "../components/OrderDeadline";
 import MinOrderAmount from "../components/MinOrderAmount";
+import {api} from "../utils/api.js"
 
 const CreateOrderPage = () => {
   const [orderTitle, setOrderTitle] = useState("");
@@ -13,17 +14,19 @@ const CreateOrderPage = () => {
   const [deadlineTime, setDeadlineTime] = useState("");
   const [minAmount, setMinAmount] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({
-      orderTitle,
-      category,
-      description,
-      deadlineDate,
-      deadlineTime,
-      minAmount,
-    });
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const token = localStorage.getItem("token");
+  const postData = { title, description, type, platform, externalUrl, expireAt, maxParticipants };
+
+  const res = await api.createPost(token, postData);
+  if (res._id) {
+    alert("Post created successfully!");
+  } else {
+    alert(res.message || "Error creating post");
+  }
+};
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">

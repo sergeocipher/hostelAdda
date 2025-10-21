@@ -1,33 +1,42 @@
-import { useState } from "react"
+import { api } from "../utils/api";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+
+
+
 export default function LoginPage(){
-    const [isSignUp , SetIsSignUp] = useState(false);
-    const [formData , setFormData] = useState({
-      name: "",
-      email:"",
-      password:""
-    })
+    const navigate = useNavigate();
+    const [isSignUp, setIsSignUp] = useState(false);
+    const [formData, setFormData] = useState({ name: "", email: "", password: "" });
 
-    const handleChange= (e) =>{
-        setFormData({
-          ...formData,
-          [e.target.name]: e.target.value
-        })
-    }
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const handleSubmit = (e) =>{
-      e.preventDefault()
-      if (isSignUp){
-        console.log("Sign up date:" , formData)
-      }else{
-        console.log("Sign-In Data : ", {
-          email: formData.email,
-          password: formData.password
-        })
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      let res;
+      if (isSignUp) {
+        res = await api.signup(formData.name, formData.email, formData.password);
+      } else {
+        res = await api.login(formData.email, formData.password);
       }
+
+      if (res.token) {
+        localStorage.setItem("token", res.token);
+        localStorage.setItem("user", JSON.stringify(res.user));
+        alert("Login successful!");
+        navigate("/home");
+      } else {
+        alert(res.message || "Something went wrong!");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Server error!");
     }
-
-
-  
+  };
 
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -83,7 +92,7 @@ export default function LoginPage(){
           {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
           <span
             className="text-blue-500 cursor-pointer hover:underline"
-            onClick={() => SetIsSignUp(!isSignUp)}
+            onClick={() => setIsSignUp(!isSignUp)}
           >
             {isSignUp ? "Sign In" : "Sign Up"}
           </span>

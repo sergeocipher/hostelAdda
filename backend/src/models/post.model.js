@@ -15,7 +15,7 @@ const postSchema = new Schema(
     expireAt: Date,
     maxParticipants: Number,
     creator: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    room: { type: Schema.Types.ObjectId, ref: "Room", required: true },
+    // room: { type: Schema.Types.ObjectId, ref: "Room", required: true },
   },
   { timestamps: { createdAt: "createdAt" } }
 );

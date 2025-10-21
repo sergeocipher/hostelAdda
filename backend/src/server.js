@@ -1,14 +1,13 @@
 // it will lisen and run the app on port 8000  and connect to mongoDB 
 import dotenv from "dotenv";
-import http from "http"
+// import http from "http"
 dotenv.config();
 
 import app from "./app.js"
 import connectDB from "./config/connectDB.js"
 
 connectDB().then(() =>{
-    const server = http.createServer(app);
-    server.listen(process.env.PORT , ()=>{
+    app.listen(process.env.PORT , ()=>{
     console.log("yo boy server running !!!!")
     })
 })

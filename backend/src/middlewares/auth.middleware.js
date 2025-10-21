@@ -8,13 +8,15 @@
 // console.err(err)
 //  500 server error 
 
-import verifyToken from "../config/token.js";
+import { verifyToken } from "../config/token.js";
 import User from "../models/user.model.js";
 
 const protect = async (req,res,next)=>{
     const authHeader = req.headers.authorization;
+    // console.log("Auth Header:", req.headers.authorization);
 
-    if (!authHeader || !authHeader.stratsWith("Bearer ")){
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")){
         return res.status(401).json({message:"   No token provided!!!!!!"})
     }
     const token = authHeader.split(" ")[1];
@@ -24,12 +26,14 @@ const protect = async (req,res,next)=>{
         return res.status(401).json({message:"Invalid token or token has expired baby !!!"})
     }
     try{
-        const user = User.findById(decoded.id);
+        const user = await User.findById(decoded.id);
         if (!user){
-            res.status(404).json({message:"User not found darling !!!"})
+            return res.status(404).json({message:"User not found darling !!!"})
         }
+
+        // attach the actual user document to the request
         req.user = user;
-        next()
+        return next();
     }catch(err){
         console.error(err);
         res.status(500).json({message:"server error darling !!!"})

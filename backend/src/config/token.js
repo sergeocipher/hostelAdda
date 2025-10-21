@@ -13,8 +13,7 @@ export const verifyToken = (token) =>{
         return jwt.verify(token , process.env.JWT_SECRET)
     }catch(err){
         return null;
-        console.log(" something wong in verify_token !!!!! ")
     }
 }
-
 export default generateToken
+

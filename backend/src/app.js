@@ -7,6 +7,7 @@ import cookieParser from  "cookie-parser";
 // from other files 
 import authRouter from "./routes/auth.routes.js"
 // import userRouter from "./routes/user.routes.js"
+import postRouter from "./routes/post.routes.js"
 
 
 
@@ -20,6 +21,9 @@ app.use(cookieParser());
 //routes
 app.use("/api/auth" , authRouter)
 // app.use("api/user" , userRouter) 
+app.use("/api/posts", postRouter);
+
+
 
 app.get("/" , (req,res) =>{
    res.send("backend is working")

@@ -7,11 +7,13 @@ const CategorySelect = ({ value, onChange }) => (
       onChange={(e) => onChange(e.target.value)}
     >
       <option value="">Select category...</option>
-      <option value="food">Food</option>
-      <option value="groceries">Groceries</option>
+      <option value="BULK_OFFER">BULK_OFFER</option>
+      <option value="BORROW">BORROW</option>
       <option value="supplies">Supplies</option>
     </select>
   </div>
 );
 
 export default CategorySelect;
+
+//const PostType = ["ORDER", "BULK_OFFER", "BORROW"];

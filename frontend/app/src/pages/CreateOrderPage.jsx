@@ -51,7 +51,7 @@ const CreateOrderPage = () => {
             </svg>
           </div>
           <h2 className="text-xl font-semibold text-gray-800">
-            Start a Group Order
+            Create a Request 
           </h2>
           <span className="text-sm text-gray-500">
             Organize orders with your friends and save on delivery

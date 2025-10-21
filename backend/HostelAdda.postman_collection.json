@@ -1,0 +1,115 @@
+{
+  "info": {
+    "name": "HostelAdda API",
+    "_postman_id": "abcd1234-5678-9101-1121-xyz",
+    "description": "Postman collection for testing HostelAdda backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Somyajit\",\n  \"email\": \"somyajit@example.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": { "raw": "http://localhost:8000/api/auth/register", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"somyajit@example.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": { "raw": "http://localhost:8000/api/auth/login", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api", "auth", "login"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "Create Post",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Mess Food Bulk Order\",\n  \"description\": \"Ordering snacks for hostel\",\n  \"type\": \"ORDER\",\n  \"platform\": \"Swiggy\",\n  \"externalUrl\": \"https://www.swiggy.com/\",\n  \"expireAt\": \"2025-10-25T18:00:00.000Z\",\n  \"maxParticipants\": 10\n}"
+            },
+            "url": { "raw": "http://localhost:8000/api/posts", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api", "posts"] }
+          }
+        },
+        {
+          "name": "Get All Posts",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8000/api/posts", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api", "posts"] }
+          }
+        },
+        {
+          "name": "Get Post By ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8000/api/posts/{{postId}}", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api", "posts", "{{postId}}"] }
+          }
+        },
+        {
+          "name": "Delete Post",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "http://localhost:8000/api/posts/{{postId}}", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api", "posts", "{{postId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Participation",
+      "item": [
+        {
+          "name": "Join Post",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "http://localhost:8000/api/participation/{{postId}}/join", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api", "participation", "{{postId}}", "join"] }
+          }
+        },
+        {
+          "name": "Leave Post",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "http://localhost:8000/api/participation/{{postId}}/leave", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api", "participation", "{{postId}}", "leave"] }
+          }
+        },
+        {
+          "name": "Get Participants",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "http://localhost:8000/api/participation/{{postId}}/participants", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api", "participation", "{{postId}}", "participants"] }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "token", "value": "" },
+    { "key": "postId", "value": "" }
+  ]
+}
+

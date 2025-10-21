@@ -8,6 +8,7 @@ import cookieParser from  "cookie-parser";
 import authRouter from "./routes/auth.routes.js"
 // import userRouter from "./routes/user.routes.js"
 import postRouter from "./routes/post.routes.js"
+import participationRouter from "./routes/participation.routes.js"
 
 
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use("/api/auth" , authRouter)
 // app.use("api/user" , userRouter) 
 app.use("/api/posts", postRouter);
+app.use("/api/participations", participationRouter);
 
 
 

@@ -7,13 +7,11 @@ export const createPost = async (req, res) => {
 
      const newPost = new Post({
       title,
-      description,
       type,
-      platform,
-      externalUrl,
+      description,
       expireAt,
-      maxParticipants,
-      creator: req.user.id, // added from JWT middleware
+      minAmount,
+      creator: req.user._id, // added from JWT middleware
     });
     const savedPost = await newPost.save();
     res.status(201).json(savedPost);

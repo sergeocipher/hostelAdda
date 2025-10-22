@@ -4,29 +4,57 @@ import CategorySelect from "../components/CategorySelect";
 import OrderDescription from "../components/OrderDescription";
 import OrderDeadline from "../components/OrderDeadline";
 import MinOrderAmount from "../components/MinOrderAmount";
-import {api} from "../utils/api.js"
+import { api } from "../utils/api";
 
 const CreateOrderPage = () => {
   const [orderTitle, setOrderTitle] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(""); // maps to 'type' in backend
   const [description, setDescription] = useState("");
   const [deadlineDate, setDeadlineDate] = useState("");
   const [deadlineTime, setDeadlineTime] = useState("");
   const [minAmount, setMinAmount] = useState("");
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const token = localStorage.getItem("token");
-  const postData = { title, description, type, platform, externalUrl, expireAt, maxParticipants };
+    try {
+      const token = localStorage.getItem("token");
 
-  const res = await api.createPost(token, postData);
-  if (res._id) {
-    alert("Post created successfully!");
-  } else {
-    alert(res.message || "Error creating post");
-  }
-};
+      if (!token) {
+        alert("Please log in first!");
+        return;
+      }
+
+      // Construct expireAt as a full Date object
+      const expireAt = new Date(`${deadlineDate}T${deadlineTime}`);
+
+      // Construct payload exactly like backend expects
+      const postData = {
+        title: orderTitle,
+        type: category, // 'category' in frontend = 'type' in backend
+        description,
+        expireAt,
+        minAmount: Number(minAmount) || 0,
+      };
+
+      const res = await api.createPost(token, postData);
+
+      if (res._id) {
+        alert("Post created successfully!");
+        setOrderTitle("");
+        setCategory("");
+        setDescription("");
+        setDeadlineDate("");
+        setDeadlineTime("");
+        setMinAmount("");
+      } else {
+        alert(res.message || "Error creating post");
+      }
+    } catch (err) {
+      console.error("Error creating post:", err);
+      alert("Server error!");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
@@ -51,7 +79,7 @@ const CreateOrderPage = () => {
             </svg>
           </div>
           <h2 className="text-xl font-semibold text-gray-800">
-            Create a Request 
+            Create a Request
           </h2>
           <span className="text-sm text-gray-500">
             Organize orders with your friends and save on delivery

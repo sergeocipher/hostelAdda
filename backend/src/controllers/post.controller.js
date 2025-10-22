@@ -3,8 +3,7 @@ import Post from "../models/post.model.js";
 // Create a new post
 export const createPost = async (req, res) => {
   try {
-    const { title, description, type, platform, externalUrl, expireAt, maxParticipants } = req.body;
-
+     const { title, type, description, expireAt, minAmount } = req.body;
      const newPost = new Post({
       title,
       type,

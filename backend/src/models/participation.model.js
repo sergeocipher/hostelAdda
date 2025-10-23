@@ -12,6 +12,7 @@ const participationSchema = new Schema(
       enum: ParticipationStatus,
       default: "INTERESTED",
     },
+    description: { type: String, required: true },
     items: Schema.Types.Mixed, 
   },
   { timestamps: { createdAt: "createdAt" } }

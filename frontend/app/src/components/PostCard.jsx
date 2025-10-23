@@ -1,6 +1,17 @@
+import { useNavigate } from "react-router-dom";
+
+
 function PostCard({ post }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/post/${post._id}`);
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow p-4">
+    <div 
+      onClick={handleClick}
+    className="bg-white rounded-lg shadow p-4">
       {/* User Info */}
       <div className="flex items-center gap-2 mb-2">
         <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-semibold">

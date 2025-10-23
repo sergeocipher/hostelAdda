@@ -44,15 +44,23 @@ export const api = {
   },
 
   // PARTICIPATION -------------------
-  joinPost: async (token, postId) => {
-    const res = await fetch(`${API_BASE_URL}/participations/${postId}/join`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.json();
-  },
+  joinPost: async (postId, data, token) => {
+  const res = await fetch(`${API_BASE_URL}/participations/${postId}/join`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || "Failed to join post");
+  }
+
+  return res.json();
+},
 
   leavePost: async (token, postId) => {
     const res = await fetch(`${API_BASE_URL}/participations/${postId}/leave`, {

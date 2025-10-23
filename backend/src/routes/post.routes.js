@@ -5,14 +5,17 @@ import {
   getAllPosts,
   getPostById,
   deletePost,
+  getMyPosts,
 } from "../controllers/post.controller.js";
 
 const router = express.Router();
 
+router.get("/my-posts", protect, getMyPosts); 
 router.post("/", protect, createPost);
 router.get("/", getAllPosts);
 router.get("/:id", getPostById);
 router.delete("/:id",protect, deletePost);
+
 
 export default router;
 

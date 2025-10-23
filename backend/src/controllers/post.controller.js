@@ -66,3 +66,14 @@ export const deletePost = async (req, res) => {
     res.status(500).json({ message: "Server error while deleting post" });
   }
 };
+
+
+export const getMyPosts = async (req, res) => {
+  try {
+    const posts = await Post.find({ creator: req.user.id });
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error("Error fetching user's posts:", error);
+    res.status(500).json({ message: "Server error while fetching user's posts" });
+  }
+};

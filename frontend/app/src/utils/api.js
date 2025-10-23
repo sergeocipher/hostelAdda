@@ -62,6 +62,19 @@ export const api = {
   return res.json();
 },
 
+getMyPosts: async (token) => {
+  const res = await fetch(`${API_BASE_URL}/posts/my-posts`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || "Failed to fetch user's posts");
+  }
+  return res.json();
+},
+
   leavePost: async (token, postId) => {
     const res = await fetch(`${API_BASE_URL}/participations/${postId}/leave`, {
       method: "DELETE",

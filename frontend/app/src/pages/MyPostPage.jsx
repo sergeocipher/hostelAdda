@@ -70,27 +70,26 @@ function MyPostsPage() {
   };
 
   const handleDelete = async (postId) => {
-  if (!window.confirm("Are you sure you want to delete this post?")) return;
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
 
-  try {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("Please log in to delete a post.");
-      return;
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Please log in to delete a post.");
+        return;
+      }
+
+      await api.deletePost(token, postId);
+
+      // remove from UI
+      setCreatedPosts((prev) => prev.filter((post) => post._id !== postId));
+
+      alert("Post deleted successfully!");
+    } catch (err) {
+      console.error("Error deleting post:", err);
+      alert(err.message || "Failed to delete post.");
     }
-
-    await api.deletePost(token, postId);
-
-    // remove from UI
-    setCreatedPosts((prev) => prev.filter((post) => post._id !== postId));
-
-    alert("Post deleted successfully!");
-  } catch (err) {
-    console.error("Error deleting post:", err);
-    alert(err.message || "Failed to delete post.");
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 pb-24">
@@ -157,14 +156,14 @@ function MyPostsPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => openResponses(post)}
-                    className="text-sm text-blue-600 hover:underline"
+                    className="px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 rounded-full shadow-sm hover:bg-blue-100 hover:shadow transition-all duration-200"
                   >
                     Responses
                   </button>
 
                   <button
                     onClick={() => handleDelete(post._id)}
-                    className="text-sm text-red-500 hover:text-red-700"
+                    className="px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 rounded-full shadow-sm hover:bg-red-100 hover:shadow-md transition-all duration-200"
                   >
                     🗑 Delete
                   </button>

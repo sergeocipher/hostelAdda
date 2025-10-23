@@ -32,7 +32,10 @@ function HomeFeedPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navbar with category selection */}
-<Navbar selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />     
+      <Navbar
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+      />
 
       {/* Main Feed */}
       <main className="flex-1 p-10 space-y-8 mb-10">

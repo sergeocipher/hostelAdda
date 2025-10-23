@@ -1,42 +1,40 @@
+// HomeFeedPage.jsx
+import { useEffect, useState, useMemo } from "react";
 import Navbar from "../components/Navbar";
 import PostCard from "../components/PostCard";
 import BottomNav from "../components/BottomNav";
 import FloatingButton from "../components/FloatingButton";
 import { api } from "../utils/api.js";
-import { useEffect, useState  } from "react";
 
-function HomeFeed() {
+function HomeFeedPage() {
   const [posts, setPosts] = useState([]);
-  const [filteredPosts, setFilteredPosts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [selectedCategory, setSelectedCategory] = useState("ALL"); // default "All"
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const res = await api.getAllPosts();
         setPosts(res);
-        setFilteredPosts(res); // initial display
       } catch (err) {
         console.error("Error fetching posts:", err);
       }
     };
-    fetchPosts();
-  }, []);
 
-  // Filter posts when category changes
-  useEffect(() => {
-    if (selectedCategory === "ALL") {
-      setFilteredPosts(posts);
-    } else {
-      const filtered = posts.filter((p) => p.type === selectedCategory);
-      setFilteredPosts(filtered);
-    }
-  }, [selectedCategory, posts]);
+    fetchPosts();
+  }, []); // fetch once
+
+  // Filter posts based on selected category
+  const filteredPosts = useMemo(() => {
+    if (selectedCategory === "ALL") return posts;
+    return posts.filter((post) => post.type === selectedCategory);
+  }, [posts, selectedCategory]);
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
+      {/* Navbar with category selection */}
+      <Navbar selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
 
+      {/* Main Feed */}
       <main className="flex-1 p-10 space-y-8 mb-10">
         {filteredPosts.length === 0 ? (
           <p className="text-center text-gray-500">No posts yet.</p>
@@ -51,4 +49,4 @@ function HomeFeed() {
   );
 }
 
-export default HomeFeed;
+export default HomeFeedPage;

@@ -9,7 +9,7 @@ const CategorySelect = ({ value, onChange }) => (
       <option value="">Select category...</option>
       <option value="BULK_OFFER">BULK_OFFER</option>
       <option value="BORROW">BORROW</option>
-      <option value="supplies">Supplies</option>
+      <option value="ORDER">ORDER</option>
     </select>
   </div>
 );

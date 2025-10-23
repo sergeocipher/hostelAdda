@@ -10,10 +10,10 @@ function BottomNav() {
           <span>📝</span>
           <span className="text-xs">My Posts</span>
         </button>
-        <button className="flex flex-col items-center hover:text-blue-600">
+        {/* <button className="flex flex-col items-center hover:text-blue-600">
           <span>🔔</span>
           <span className="text-xs">Notifications</span>
-        </button>
+        </button> */}
         <button className="flex flex-col items-center hover:text-blue-600">
           <span>👤</span>
           <span className="text-xs">Profile</span>

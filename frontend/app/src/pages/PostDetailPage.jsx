@@ -141,7 +141,7 @@ function PostDetailPage() {
           )}
 
           {/* Chat Section (static for now) */}
-          <div>
+          {/* <div>
             <h4 className="font-semibold text-gray-700 mb-3">Order Chat</h4>
             <div className="space-y-3">
               <div className="flex flex-col items-start">
@@ -153,7 +153,7 @@ function PostDetailPage() {
                 <span className="text-xs text-gray-400 mt-1">2:46 PM</span>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

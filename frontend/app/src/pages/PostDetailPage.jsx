@@ -35,16 +35,12 @@ function PostDetailPage() {
         return;
       }
 
-      const res = await api.joinPost(id, { description: joinDescription }, token);
+      const result = await api.joinPost(id, { description: joinDescription }, token);
 
-      if (res.success) {
-        alert("You’ve successfully joined this order!");
-        setJoinDescription("");
-        setShowJoinForm(false);
-        navigate("/home", { replace: true });
-      } else {
-        alert(res.message || "Failed to join order");
-      }
+      alert(result.message || "You’ve successfully joined this order!");
+      setJoinDescription("");
+      setShowJoinForm(false);
+      navigate("/home", { replace: true });
     } catch (err) {
       console.error("Error joining order:", err);
       alert("Server error");

@@ -6,10 +6,12 @@ import { api } from "../utils/api";
 function MyPostsPage() {
   const [activeTab, setActiveTab] = useState("created");
   const [createdPosts, setCreatedPosts] = useState([]);
-  const [joinedPosts, setJoinedPosts] = useState([]); // future use
+  const [joinedPosts, setJoinedPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedPost, setSelectedPost] = useState(null);
+  const [participants, setParticipants] = useState([]);
+  const [loadingParticipants, setLoadingParticipants] = useState(false);
 
   // Fetch user's posts
   useEffect(() => {
@@ -49,6 +51,21 @@ function MyPostsPage() {
         return "text-orange-600 bg-orange-50";
       default:
         return "text-gray-600 bg-gray-100";
+    }
+  };
+
+  // Fetch participants when clicking "Responses"
+  const openResponses = async (post) => {
+    setSelectedPost(post);
+    setLoadingParticipants(true);
+    try {
+      const data = await api.getParticipants(post._id);
+      setParticipants(data);
+    } catch (err) {
+      console.error("Error fetching participants:", err);
+      setParticipants([]);
+    } finally {
+      setLoadingParticipants(false);
     }
   };
 
@@ -112,7 +129,7 @@ function MyPostsPage() {
                   {post.status || "Active"}
                 </span>
                 <button
-                  onClick={() => setSelectedPost(post)}
+                  onClick={() => openResponses(post)}
                   className="text-sm text-blue-600 hover:underline"
                 >
                   Responses
@@ -133,21 +150,24 @@ function MyPostsPage() {
               Responses for "{selectedPost.title}"
             </h2>
             <div className="space-y-3 max-h-60 overflow-y-auto">
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-700">
-                  “I’ll join for 2 pizzas 🍕 with extra cheese.”
-                </p>
-                <p className="text-xs text-gray-400 mt-1">— Riya Sharma</p>
-              </div>
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-700">
-                  “Can you also add garlic bread?”
-                </p>
-                <p className="text-xs text-gray-400 mt-1">— Arjun Patel</p>
-              </div>
+              {loadingParticipants ? (
+                <p className="text-sm text-gray-500">Loading participants...</p>
+              ) : participants.length === 0 ? (
+                <p className="text-sm text-gray-500">No participants yet.</p>
+              ) : (
+                participants.map((p) => (
+                  <div key={p._id} className="p-3 bg-gray-50 rounded-lg">
+                    <p className="text-sm text-gray-700">{p.description}</p>
+                    <p className="text-xs text-gray-400 mt-1">— {p.user.name}</p>
+                  </div>
+                ))
+              )}
             </div>
             <button
-              onClick={() => setSelectedPost(null)}
+              onClick={() => {
+                setSelectedPost(null);
+                setParticipants([]);
+              }}
               className="absolute top-2 right-3 text-gray-500 hover:text-gray-700"
             >
               ✖

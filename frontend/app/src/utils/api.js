@@ -75,6 +75,21 @@ getMyPosts: async (token) => {
   return res.json();
 },
 
+ getParticipants: async (postId) => {
+  const token = localStorage.getItem("token");
+  const res = await fetch(`${API_BASE_URL}/participations/${postId}/participants`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || "Failed to fetch participants");
+  }
+
+  return res.json();
+},
+
+
   leavePost: async (token, postId) => {
     const res = await fetch(`${API_BASE_URL}/participations/${postId}/leave`, {
       method: "DELETE",

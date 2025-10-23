@@ -69,6 +69,29 @@ function MyPostsPage() {
     }
   };
 
+  const handleDelete = async (postId) => {
+  if (!window.confirm("Are you sure you want to delete this post?")) return;
+
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in to delete a post.");
+      return;
+    }
+
+    await api.deletePost(token, postId);
+
+    // remove from UI
+    setCreatedPosts((prev) => prev.filter((post) => post._id !== postId));
+
+    alert("Post deleted successfully!");
+  } catch (err) {
+    console.error("Error deleting post:", err);
+    alert(err.message || "Failed to delete post.");
+  }
+};
+
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 pb-24">
       <Navbar />
@@ -112,7 +135,9 @@ function MyPostsPage() {
               className="bg-white rounded-xl shadow-sm p-4 flex justify-between items-center border border-gray-100 hover:shadow-md transition"
             >
               <div>
-                <h3 className="font-semibold text-lg text-gray-800">{post.title}</h3>
+                <h3 className="font-semibold text-lg text-gray-800">
+                  {post.title}
+                </h3>
                 <span className="inline-block text-xs mt-1 px-2 py-1 rounded-full bg-blue-50 text-blue-700">
                   {post.type}
                 </span>
@@ -128,12 +153,22 @@ function MyPostsPage() {
                 >
                   {post.status || "Active"}
                 </span>
-                <button
-                  onClick={() => openResponses(post)}
-                  className="text-sm text-blue-600 hover:underline"
-                >
-                  Responses
-                </button>
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => openResponses(post)}
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    Responses
+                  </button>
+
+                  <button
+                    onClick={() => handleDelete(post._id)}
+                    className="text-sm text-red-500 hover:text-red-700"
+                  >
+                    🗑 Delete
+                  </button>
+                </div>
               </div>
             </div>
           ))
@@ -158,7 +193,9 @@ function MyPostsPage() {
                 participants.map((p) => (
                   <div key={p._id} className="p-3 bg-gray-50 rounded-lg">
                     <p className="text-sm text-gray-700">{p.description}</p>
-                    <p className="text-xs text-gray-400 mt-1">— {p.user.name}</p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      — {p.user.name}
+                    </p>
                   </div>
                 ))
               )}

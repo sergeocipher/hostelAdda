@@ -88,9 +88,23 @@ getMyPosts: async (token) => {
 
   return res.json();
 },
+deletePost: async (token, postId) => {
+  const res = await fetch(`${API_BASE_URL}/posts/${postId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || "Failed to delete post");
+  }
 
-  leavePost: async (token, postId) => {
+  return res.json();
+},
+
+leavePost: async (token, postId) => {
     const res = await fetch(`${API_BASE_URL}/participations/${postId}/leave`, {
       method: "DELETE",
       headers: {

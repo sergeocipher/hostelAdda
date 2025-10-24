@@ -7,7 +7,7 @@ import app from "./app.js"
 import connectDB from "./config/connectDB.js"
 
 connectDB().then(() =>{
-    app.listen(process.env.PORT , ()=>{
+    app.listen(process.env.PORT || 8000, ()=>{
     console.log("yo boy server running !!!!")
     })
 })

@@ -6,7 +6,6 @@ import cookieParser from  "cookie-parser";
 
 // from other files 
 import authRouter from "./routes/auth.routes.js"
-// import userRouter from "./routes/user.routes.js"
 import postRouter from "./routes/post.routes.js"
 import participationRouter from "./routes/participation.routes.js"
 
@@ -15,7 +14,13 @@ import participationRouter from "./routes/participation.routes.js"
 const app = express();
 
 //middlewares
-app.use(cors());
+
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 

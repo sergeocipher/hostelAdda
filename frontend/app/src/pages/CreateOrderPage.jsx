@@ -5,8 +5,11 @@ import OrderDescription from "../components/OrderDescription";
 import OrderDeadline from "../components/OrderDeadline";
 import MinOrderAmount from "../components/MinOrderAmount";
 import { api } from "../utils/api";
+import { useNavigate } from "react-router-dom";
+
 
 const CreateOrderPage = () => {
+  const navigate = useNavigate();
   const [orderTitle, setOrderTitle] = useState("");
   const [category, setCategory] = useState(""); // maps to 'type' in backend
   const [description, setDescription] = useState("");
@@ -47,9 +50,12 @@ const CreateOrderPage = () => {
         setDeadlineDate("");
         setDeadlineTime("");
         setMinAmount("");
+        navigate("/home");
+
       } else {
         alert(res.message || "Error creating post");
       }
+      navigate("/home");
     } catch (err) {
       console.error("Error creating post:", err);
       alert("Server error!");

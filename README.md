@@ -152,7 +152,7 @@ We're planning to expand HostelAdda with these features to make hostel life even
 - 👤 Profile section — richer user profiles with avatars, contact preferences, past participation history and rating/badges.
 - 🚗 Cab sharing facilities — allow users to create/join ride shares to nearby markets or delivery pickup locations with time/location details.
 - 📝 Complaints section — users can file complaints or maintenance requests; admins can track and respond to issues.
-- 💳 Payment gateway integration — split payments, collect contributions for group orders, or integrate with popular gateways (Stripe/PayPal) for secure payments.
+- 💳 Payment gateway integration — split payments, collect contributions for group orders, or integrate with popular gateways (Stripe/PayPal) for secure payment.
 
 
 

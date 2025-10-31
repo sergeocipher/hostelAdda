@@ -5,6 +5,7 @@ import CreateOrderPage from "./pages/CreateOrderPage";
 import HomeFeedPage from "./pages/HomeFeedPage";
 import PostDetailPage from "./pages/PostDetailPage";
 import MyPostPage from "./pages/MyPostPage";
+import FriendList from "./pages/FriendList";
 
 
 function App(){
@@ -15,6 +16,7 @@ function App(){
         <Route path= "/home" element = {<HomeFeedPage/>}/>
         <Route path= "/myposts" element = {<MyPostPage/>}/>
         <Route path= "/post/:id" element = {<PostDetailPage/>}/>
+        <Route path= "/friend" element = {<FriendList/>}/>
       </Routes>
   )
 }

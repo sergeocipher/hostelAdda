@@ -22,6 +22,14 @@ function BottomNav() {
           <span className="text-xs">My Posts</span>
         </button>
 
+        <button
+          onClick={() => navigate("/friend")}
+          className="flex flex-col items-center hover:text-blue-600"
+        >
+          <span>🫂</span>
+          <span className="text-xs">Friends</span>
+        </button>
+
         
       </div>
     </nav>

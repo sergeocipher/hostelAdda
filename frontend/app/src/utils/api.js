@@ -1,4 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
 export const api = {
   // AUTH -------------------
@@ -45,72 +46,91 @@ export const api = {
 
   // PARTICIPATION -------------------
   joinPost: async (postId, data, token) => {
-  const res = await fetch(`${API_BASE_URL}/participations/${postId}/join`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  });
+    const res = await fetch(`${API_BASE_URL}/participations/${postId}/join`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
 
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || "Failed to join post");
-  }
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || "Failed to join post");
+    }
 
-  return res.json();
-},
+    return res.json();
+  },
 
-getMyPosts: async (token) => {
-  const res = await fetch(`${API_BASE_URL}/posts/my-posts`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || "Failed to fetch user's posts");
-  }
-  return res.json();
-},
+  getMyPosts: async (token) => {
+    const res = await fetch(`${API_BASE_URL}/posts/my-posts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || "Failed to fetch user's posts");
+    }
+    return res.json();
+  },
 
- getParticipants: async (postId) => {
-  const token = localStorage.getItem("token");
-  const res = await fetch(`${API_BASE_URL}/participations/${postId}/participants`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  getParticipants: async (postId) => {
+    const token = localStorage.getItem("token");
+    const res = await fetch(
+      `${API_BASE_URL}/participations/${postId}/participants`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || "Failed to fetch participants");
-  }
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || "Failed to fetch participants");
+    }
 
-  return res.json();
-},
-deletePost: async (token, postId) => {
-  const res = await fetch(`${API_BASE_URL}/posts/${postId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    return res.json();
+  },
+  deletePost: async (token, postId) => {
+    const res = await fetch(`${API_BASE_URL}/posts/${postId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || "Failed to delete post");
-  }
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || "Failed to delete post");
+    }
 
-  return res.json();
-},
+    return res.json();
+  },
 
-leavePost: async (token, postId) => {
+  leavePost: async (token, postId) => {
     const res = await fetch(`${API_BASE_URL}/participations/${postId}/leave`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+    return res.json();
+  },
+
+  getAllUsers: async (token) => {
+    const res = await fetch(`${API_BASE_URL}/friends`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || "Failed to fetch users");
+    }
+
     return res.json();
   },
 };

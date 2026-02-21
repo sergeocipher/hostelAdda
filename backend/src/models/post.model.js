@@ -2,6 +2,7 @@ import {mongoose, Schema} from "mongoose";
 
 const PostType = ["ORDER", "BULK_OFFER", "BORROW"];
 const PostStatus = ["OPEN", "ORDERED", "CLOSED", "CANCELLED", "EXPIRED"];
+const timeStatus = []
 
 const postSchema = new mongoose.Schema(
   {
@@ -27,11 +28,33 @@ const postSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    room:{
+      type: String, 
+      enum: ["Uniworld-1" , "Uniworld-2" , "college"],
+      required: true
+    },
     minAmount: {
       type: Number,
       required: false,
       default: 0,
     },
+    timeline:[
+      {
+          status: {
+            type: String ,
+            enum: timeStatus ,
+            required: true
+          },
+          updatedAt:{
+            type: Date, 
+            default: Date.now
+          }, 
+          updatedBy:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+          }
+      }
+    ],
     creator: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

@@ -18,6 +18,11 @@ const userSchema = new Schema({
         type: String,
         enum:["USER" , "ADMIN"]
     },
+    room:{
+        type: String ,
+        enum: ["Uniworld-1" , "Uniworld-2"],
+        required: true
+    },
     IsVerified:{
         type: Boolean,
         default: false 
